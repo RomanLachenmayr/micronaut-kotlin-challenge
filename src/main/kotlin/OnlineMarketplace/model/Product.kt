@@ -10,7 +10,7 @@ data class Product(
     @field:Id
     @field:GeneratedValue
     val id: String,
-    val name: String,
-    val description: String,
-    val price: Double
+    var name: String,
+    var description: String,
+    var price: Double
 )
