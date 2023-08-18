@@ -1,8 +1,8 @@
 package OnlineMarketplace.service
+
 import OnlineMarketplace.model.Product
 import OnlineMarketplace.repository.ProductRepository
 import io.micronaut.http.HttpStatus
-import io.micronaut.http.exceptions.HttpException
 import io.micronaut.http.exceptions.HttpStatusException
 import jakarta.inject.Singleton
 
@@ -10,9 +10,7 @@ import jakarta.inject.Singleton
 class ProductService (private val productRepository: ProductRepository) {
 
 
-    fun getAllProducts(): List<Product> {
-        return productRepository.findAll().toList()
-    }
+    fun getAllProducts(): List<Product> = productRepository.findAll().toList()
 
 
     fun getProductById(id: String): Product {
@@ -24,9 +22,7 @@ class ProductService (private val productRepository: ProductRepository) {
     }
 
 
-    fun addProduct(product: Product): Product {
-        return productRepository.save(product)
-    }
+    fun addProduct(product: Product): Product = productRepository.save(product)
 
 
     fun updateProduct(id: String, updatedProduct: Product): Product {
