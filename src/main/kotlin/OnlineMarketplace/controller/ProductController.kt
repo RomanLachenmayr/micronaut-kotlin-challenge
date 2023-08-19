@@ -11,10 +11,7 @@ import io.micronaut.http.annotation.Get
 import io.micronaut.http.annotation.PathVariable
 import io.micronaut.http.annotation.Post
 import io.micronaut.http.annotation.Put
-import io.micronaut.validation.Validated
-import jakarta.validation.Valid
 
-@Validated
 @Controller("/products")
 class ProductController (private val productService: ProductService) {
 
@@ -26,11 +23,11 @@ class ProductController (private val productService: ProductService) {
 
     @Post("/")
     @Consumes(MediaType.APPLICATION_JSON)
-    fun addProduct(@Body @Valid product: Product): Product = productService.addProduct(product)
+    fun addProduct(@Body product: Product): Product = productService.addProduct(product)
 
     @Put("/{product_id}")
     @Consumes(MediaType.APPLICATION_JSON)
-    fun updateProduct(@PathVariable product_id: String, @Body @Valid product: Product) =
+    fun updateProduct(@PathVariable product_id: String, @Body product: Product) =
         productService.updateProduct(product_id, product)
 
     @Delete("/{product_id}")

@@ -28,11 +28,11 @@ class ValidationUtil {
         }
 
         fun validateId(id: String) {
-            val hexRegex = Regex("[0-9A-Fa-f]+")
-            if (id.length != 24 || !hexRegex.matches(id)) {
+            if (id.length != 24 || !Regex("[0-9A-Fa-f]+").matches(id)) {
                 throw HttpStatusException(HttpStatus.BAD_REQUEST, "the provided id is not valid")
             }
         }
+
     }
 
 }

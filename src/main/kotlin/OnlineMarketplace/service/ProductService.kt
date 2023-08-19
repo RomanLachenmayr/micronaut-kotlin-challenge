@@ -41,17 +41,18 @@ class ProductService (private val productRepository: ProductRepository) {
         productToUpdate.description = updatedProduct.description
         productToUpdate.name = updatedProduct.name
         productToUpdate.price = updatedProduct.price
-        return productRepository.save(productToUpdate)
+        return productRepository.update(productToUpdate)
     }
 
 
-    fun removeProductById(id: String) {
+    fun removeProductById(id: String): String {
         ValidationUtil.validateId(id)
         if (!productRepository.existsById(id)) {
             throw HttpStatusException(HttpStatus.NOT_FOUND,
                 "Product with Id $id could not be deleted as it does not exist")
         }
         productRepository.deleteById(id)
+        return "the product was successfully deleted"
     }
 
 
