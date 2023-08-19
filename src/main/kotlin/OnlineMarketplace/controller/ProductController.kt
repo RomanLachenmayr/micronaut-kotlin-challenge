@@ -2,6 +2,7 @@ package OnlineMarketplace.controller
 
 import OnlineMarketplace.model.Product
 import OnlineMarketplace.service.ProductService
+import io.micronaut.http.HttpResponse
 import io.micronaut.http.MediaType
 import io.micronaut.http.annotation.Body
 import io.micronaut.http.annotation.Consumes
@@ -26,6 +27,7 @@ class ProductController (private val productService: ProductService) {
 
     @Post("/")
     @Consumes(MediaType.APPLICATION_JSON)
+    //fun addProduct(@Body @Valid product: Product): HttpResponse<Product> {return HttpResponse.ok(product)}
     fun addProduct(@Body @Valid product: Product): Product = productService.addProduct(product)
 
     @Put("/{product_id}")
