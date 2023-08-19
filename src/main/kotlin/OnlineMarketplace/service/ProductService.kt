@@ -14,11 +14,10 @@ class ProductService (private val productRepository: ProductRepository) {
 
 
     fun getProductById(id: String): Product {
-        if (productRepository.existsById(id)) {
-            return productRepository.findById(id).get()
+        if (!productRepository.existsById(id)) {
+            throw HttpStatusException(HttpStatus.NOT_FOUND, "Product with Id $id does not exist")
         }
-        throw HttpStatusException(HttpStatus.NOT_FOUND,
-            "Product with Id $id does not exist.")
+        return productRepository.findById(id).get()
     }
 
 
@@ -26,25 +25,24 @@ class ProductService (private val productRepository: ProductRepository) {
 
 
     fun updateProduct(id: String, updatedProduct: Product): Product {
-        if (productRepository.existsById(id)) {
-            val productToUpdate = productRepository.findById(id).get()
-            productToUpdate.description = updatedProduct.description
-            productToUpdate.name = updatedProduct.name
-            productToUpdate.price = updatedProduct.price
-            return productRepository.save(productToUpdate)
+        if (!productRepository.existsById(id)) {
+            throw HttpStatusException(HttpStatus.NOT_FOUND,
+                "Product with Id $id could not be updated as it does not exist")
         }
-        throw HttpStatusException(HttpStatus.NOT_FOUND,
-            "Product with Id $id could not be updated as it does not exist.")
+        val productToUpdate = productRepository.findById(id).get()
+        productToUpdate.description = updatedProduct.description
+        productToUpdate.name = updatedProduct.name
+        productToUpdate.price = updatedProduct.price
+        return productRepository.save(productToUpdate)
     }
 
 
     fun removeProductById(id: String) {
-        if (productRepository.existsById(id)) {
-            productRepository.deleteById(id)
-        } else {
+        if (!productRepository.existsById(id)) {
             throw HttpStatusException(HttpStatus.NOT_FOUND,
-                "Product with Id $id could not be deleted as it does not exist.")
+                "Product with Id $id could not be deleted as it does not exist")
         }
+        productRepository.deleteById(id)
     }
 
 
