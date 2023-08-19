@@ -1,6 +1,7 @@
 package OnlineMarketplace.service
 
 import OnlineMarketplace.model.Product
+import OnlineMarketplace.model.util.ValidationUtil
 import OnlineMarketplace.repository.ProductRepository
 import io.micronaut.http.HttpStatus
 import io.micronaut.http.exceptions.HttpStatusException
@@ -14,6 +15,7 @@ class ProductService (private val productRepository: ProductRepository) {
 
 
     fun getProductById(id: String): Product {
+        ValidationUtil.validateId(id)
         if (!productRepository.existsById(id)) {
             throw HttpStatusException(HttpStatus.NOT_FOUND, "Product with Id $id does not exist")
         }
@@ -21,14 +23,20 @@ class ProductService (private val productRepository: ProductRepository) {
     }
 
 
-    fun addProduct(product: Product): Product = productRepository.save(product)
+    fun addProduct(product: Product): Product {
+        ValidationUtil.validateProductParameters(product.name, product.description, product.price)
+        return productRepository.save(product)
+    }
 
 
     fun updateProduct(id: String, updatedProduct: Product): Product {
+        ValidationUtil.validateId(id)
         if (!productRepository.existsById(id)) {
             throw HttpStatusException(HttpStatus.NOT_FOUND,
                 "Product with Id $id could not be updated as it does not exist")
         }
+        ValidationUtil.validateProductParameters(updatedProduct.name, updatedProduct.description, updatedProduct.price)
+
         val productToUpdate = productRepository.findById(id).get()
         productToUpdate.description = updatedProduct.description
         productToUpdate.name = updatedProduct.name
@@ -38,6 +46,7 @@ class ProductService (private val productRepository: ProductRepository) {
 
 
     fun removeProductById(id: String) {
+        ValidationUtil.validateId(id)
         if (!productRepository.existsById(id)) {
             throw HttpStatusException(HttpStatus.NOT_FOUND,
                 "Product with Id $id could not be deleted as it does not exist")
