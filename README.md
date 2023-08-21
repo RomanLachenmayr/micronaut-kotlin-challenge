@@ -13,7 +13,7 @@
 ### Step 1: Start Docker
 - Open docker desktop and verify it is running
 
-### Step 2: Start MongoD
+### Step 2: Start MongoDB
 - Pull the Docker image: `docker pull mongo`
 - Run the container: `docker run -d -p 27017:27017 --name mongodb mongo`
 - Check if the container is running: `docker ps`
