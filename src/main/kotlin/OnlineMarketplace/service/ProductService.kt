@@ -49,10 +49,15 @@ class ProductService (private val productRepository: ProductRepository) {
         ValidationUtil.validateId(id)
         if (!productRepository.existsById(id)) {
             throw HttpStatusException(HttpStatus.NOT_FOUND,
-                "Product with Id $id could not be deleted as it does not exist")
+                "Product with id $id cannot be deleted as it does not exist")
         }
         productRepository.deleteById(id)
-        return "the product was successfully deleted"
+        return "the product with id $id was successfully deleted"
+    }
+
+    fun deleteAllProducts(): String { // only for testing purposes
+        productRepository.deleteAll()
+        return "all products were successfully deleted"
     }
 
 

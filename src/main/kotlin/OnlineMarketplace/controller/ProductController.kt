@@ -27,10 +27,12 @@ class ProductController (private val productService: ProductService) {
 
     @Put("/{product_id}")
     @Consumes(MediaType.APPLICATION_JSON)
-    fun updateProduct(@PathVariable product_id: String, @Body product: Product) =
+    fun updateProduct(@PathVariable product_id: String, @Body product: Product): Product =
         productService.updateProduct(product_id, product)
 
     @Delete("/{product_id}")
-    fun deleteProduct(@PathVariable product_id: String) = productService.removeProductById(product_id)
+    fun deleteProduct(@PathVariable product_id: String): String = productService.removeProductById(product_id)
 
+    @Delete("/") // only for testing purposes
+    fun deleteAllProducts(): String = productService.deleteAllProducts()
 }

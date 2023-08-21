@@ -20,7 +20,6 @@ class ValidationUtil {
         }
 
         fun validateOrderParameters(productId: String, quantity: Int) {
-            validateId(productId)
             if(quantity <= 0) {
                 throw HttpStatusException(HttpStatus.BAD_REQUEST, "at least one product must be ordered")
             }

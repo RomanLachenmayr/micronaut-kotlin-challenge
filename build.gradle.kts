@@ -17,6 +17,8 @@ repositories {
 }
 
 dependencies {
+    testAnnotationProcessor("io.micronaut:micronaut-inject-java")
+
     ksp("io.micronaut.data:micronaut-data-document-processor")
     ksp("io.micronaut.serde:micronaut-serde-processor")
     implementation("io.micronaut.data:micronaut-data-mongodb")
@@ -29,14 +31,23 @@ dependencies {
     runtimeOnly("com.fasterxml.jackson.module:jackson-module-kotlin")
     runtimeOnly("org.mongodb:mongodb-driver-sync")
     testImplementation("io.micronaut:micronaut-http-client")
-}
+    testImplementation(kotlin("test"))
 
+    testImplementation("org.junit.jupiter:junit-jupiter-api")
+    testImplementation("io.micronaut.test:micronaut-test-junit5")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
+    testImplementation("org.junit.jupiter:junit-jupiter-engine")
+}
 
 application {
     mainClass.set("OnlineMarketplace.ApplicationKt")
 }
 java {
     sourceCompatibility = JavaVersion.toVersion("17")
+}
+
+tasks.test {
+    useJUnitPlatform()
 }
 
 tasks {
